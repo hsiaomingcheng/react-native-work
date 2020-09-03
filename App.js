@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 export default function App() {
   const [inputValue, setInputValue] = useState('');
-  const [valid, setValid] = useState();
-  const phoneNumber = '0939079170';
+  const [isShowText, setIsShowText] = useState();
 
   function handleText(e) {
     setInputValue(e);
+    setIsShowText(false);
+  }
 
-    if (phoneNumber !== e) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
+  function handleStateText() {
+    setIsShowText(true);
   }
 
   return (
@@ -23,11 +21,17 @@ export default function App() {
         onChangeText={text => handleText(text)}
         value={inputValue}
         keyboardType="numeric"
-        maxLength={10}
+        maxLength={4}
       />
-      <Text>您輸入的手機號碼是：{inputValue}</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => handleStateText()}
+      >
+        <Text style={styles.text}>Enter</Text>
+      </TouchableOpacity>
+
       {
-        inputValue !== '' && <Text>{valid ? '輸入成功！' : '手機輸入錯誤！'}</Text>
+        isShowText === true && <Text>{inputValue === '1234' ? '輸入成功!' : '輸入錯誤!'}</Text>
       }
     </View>
   );
@@ -50,5 +54,18 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 28,
     textAlign: 'center'
+  },
+  button: {
+    margin: 10,
+    backgroundColor: '#00a1ff',
+    borderRadius: 15,
+    height: 50,
+    width: 300
+  },
+  text: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontSize: 28,
+    lineHeight: 50
   }
 });
