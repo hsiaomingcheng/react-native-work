@@ -1,35 +1,58 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import HomeScreen from './src/screens/HomeScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import HomeDetailScreen from './src/screens/HomeDetailScreen';
+
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [inputValue, setInputValue] = useState('');
-  const [valid, setValid] = useState();
-  const phoneNumber = '0939079170';
-
-  function handleText(e) {
-    setInputValue(e);
-
-    if (phoneNumber !== e) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
-  }
-
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textInput}
-        onChangeText={text => handleText(text)}
-        value={inputValue}
-        keyboardType="numeric"
-        maxLength={10}
-      />
-      <Text>您輸入的手機號碼是：{inputValue}</Text>
-      {
-        inputValue !== '' && <Text>{valid ? '輸入成功！' : '手機輸入錯誤！'}</Text>
-      }
-    </View>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Home" //指定首次進入時要show出的頁面
+          screenOptions={{
+            headerTintColor: 'white',
+            headerStyle: { backgroundColor: 'tomato' },
+          }}
+        >
+          <Stack.Screen name="Home" component={HomeScreen} options={{ title: '首頁' }} />
+          <Stack.Screen name="HomeDetailScreen" component={HomeDetailScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused
+                  ? 'ios-information-circle'
+                  : 'ios-information-circle-outline';
+              } else if (route.name === 'Profile') {
+                iconName = focused ? 'ios-list-box' : 'ios-list';
+              }
+
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+          }}
+        >
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Profile" component={ProfileScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
@@ -39,16 +62,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  textInput: {
-    height: 50,
-    width: 300,
-    borderRadius: 0,
-    borderColor: 'darkgray',
-    borderWidth: 5,
-    backgroundColor: 'gray',
-    color: 'white',
-    fontSize: 28,
-    textAlign: 'center'
   }
 });
