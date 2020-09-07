@@ -9,3 +9,5 @@ react-native homework place
 作業3： [密碼判斷APP](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200903/homework_3/chris)
 
 作業4： [自製元件](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/homework_4/chris)
+
+練習： [使用tab跟stack做換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/pratice_navgation/chris)
