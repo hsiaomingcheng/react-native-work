@@ -1,54 +1,82 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './src/screens/Home';
+import DogDetail from './src/screens/DogDetail';
+import DogCategory from './src/screens/DogCategory';
+import CatDetail from './src/screens/CatDetail';
+import CatCategory from './src/screens/CatCategory';
 
-export default function App() {
-  const [inputValue, setInputValue] = useState('');
-  const [valid, setValid] = useState();
-  const phoneNumber = '0939079170';
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-  function handleText(e) {
-    setInputValue(e);
-
-    if (phoneNumber !== e) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
-  }
-
+function MyHome() {
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textInput}
-        onChangeText={text => handleText(text)}
-        value={inputValue}
-        keyboardType="numeric"
-        maxLength={10}
-      />
-      <Text>您輸入的手機號碼是：{inputValue}</Text>
-      {
-        inputValue !== '' && <Text>{valid ? '輸入成功！' : '手機輸入錯誤！'}</Text>
-      }
-    </View>
+    <Stack.Navigator
+      initialRouteName='Home'
+    >
+      <Stack.Screen name='Home' component={Home} />
+      <Stack.Screen name='DogDetail' component={DogDetail} />
+      <Stack.Screen name='CatDetail' component={CatDetail} />
+      <Stack.Screen name='DogCategory' component={DogCategory} />
+      <Stack.Screen name='CatCategory' component={CatCategory} />
+    </Stack.Navigator>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    height: 50,
-    width: 300,
-    borderRadius: 0,
-    borderColor: 'darkgray',
-    borderWidth: 5,
-    backgroundColor: 'gray',
-    color: 'white',
-    fontSize: 28,
-    textAlign: 'center'
-  }
-});
+function MyDog() {
+  return (
+    <Stack.Navigator
+      initialRouteName='DogDetail'
+    >
+      <Stack.Screen name='DogDetail' component={DogDetail} />
+      <Stack.Screen name='DogCategory' component={DogCategory} />
+    </Stack.Navigator>
+  );
+}
+
+function MyCat() {
+  return (
+    <Stack.Navigator
+      initialRouteName='CatDetail'
+    >
+      <Stack.Screen name='CatDetail' component={CatDetail} />
+      <Stack.Screen name='CatCategory' component={CatCategory} />
+    </Stack.Navigator>
+  );
+}
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = focused
+                ? 'ios-information-circle'
+                : 'ios-information-circle-outline';
+            } else {
+              iconName = focused ? 'ios-list-box' : 'ios-list';
+            }
+
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+        }}
+      >
+        <Tab.Screen name='Home' component={MyHome} />
+        <Tab.Screen name='DogDetail' component={MyDog} />
+        <Tab.Screen name='CatDetail' component={MyCat} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
