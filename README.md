@@ -10,4 +10,6 @@ react-native homework place
 
 作業4： [自製元件](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/homework_4/chris)
 
+作業5： [套用navigation做各種換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200907/homework_5/chris)
+
 練習： [使用tab跟stack做換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/pratice_navgation/chris)
