@@ -1,35 +1,20 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './src/screens/Home.js';
+import HomeDetail from './src/screens/HomeDetail.js';
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [inputValue, setInputValue] = useState('');
-  const [valid, setValid] = useState();
-  const phoneNumber = '0939079170';
-
-  function handleText(e) {
-    setInputValue(e);
-
-    if (phoneNumber !== e) {
-      setValid(false);
-    } else {
-      setValid(true);
-    }
-  }
-
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.textInput}
-        onChangeText={text => handleText(text)}
-        value={inputValue}
-        keyboardType="numeric"
-        maxLength={10}
-      />
-      <Text>您輸入的手機號碼是：{inputValue}</Text>
-      {
-        inputValue !== '' && <Text>{valid ? '輸入成功！' : '手機輸入錯誤！'}</Text>
-      }
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="HomeDetail" component={HomeDetail} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -39,16 +24,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  textInput: {
-    height: 50,
-    width: 300,
-    borderRadius: 0,
-    borderColor: 'darkgray',
-    borderWidth: 5,
-    backgroundColor: 'gray',
-    color: 'white',
-    fontSize: 28,
-    textAlign: 'center'
   }
 });
