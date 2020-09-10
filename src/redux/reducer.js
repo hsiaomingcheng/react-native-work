@@ -1,8 +1,7 @@
-import { combineReducers } from 'redux';
 import { CHANGE_NAME } from './action';
 
 const initialState = {
-    name: '預設藏鏡人'
+    newName: '預設藏鏡人'
 }
 
 function reducer(state = initialState, action) {

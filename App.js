@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,6 +6,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './src/screens/Home.js';
 import HomeDetail from './src/screens/HomeDetail.js';
 import Setting from './src/screens/Setting.js';
+
+//for redux
+import configureStore from './src/redux/store';
+import { StoreContext } from 'redux-react-hook';
+
+const store = configureStore();
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -20,7 +25,7 @@ function MyHome() {
   );
 }
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -51,11 +56,10 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
+export default MyApp = () => {
+  return (
+    <StoreContext.Provider value={store}>
+      <App />
+    </StoreContext.Provider>
+  );
+}

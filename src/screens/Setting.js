@@ -1,25 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import * as StorageHelper from '../helpers/StorageHelper';
+import { useDispatch, useMappedState } from 'redux-react-hook';
+import { changeName } from '../redux/action';
 
 export default function Setting() {
     const [inputText, setInputText] = useState('');
-
-    useEffect(() => {
-        getLocalStorage();
-    }, []);
-
-    const getLocalStorage = async () => {
-        const getName = await StorageHelper.getUserName('name');
-
-        if (getName) {
-            setInputText(getName);
-        }
-    }
-
-    const handleSetName = async () => {
-        await StorageHelper.setUserName('name', inputText);
-    }
+    const myNewName = useMappedState(state => state.newName);
+    const dispatch = useDispatch();
 
     const onChangeText = (e) => {
         setInputText(e);
@@ -33,10 +20,10 @@ export default function Setting() {
                 onChangeText={e => onChangeText(e)}
                 value={inputText}
             />
-            <Text>Hello {inputText ? '我是' : ''}{inputText}!!</Text>
+            <Text>Hello {myNewName ? '我是' : ''}{myNewName}!!</Text>
             <Button
-                title="設定我的名字"
-                onPress={() => handleSetName()}
+                title="Redux 設定我的名字"
+                onPress={() => dispatch(changeName(inputText))}
             />
         </View>
     );
