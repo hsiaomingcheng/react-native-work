@@ -15,3 +15,5 @@ react-native homework place
 作業6： [自製data列表(含圖片)](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200907/homework_6/chris)
 
 練習： [使用tab跟stack做換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/pratice_navgation/chris)
+
+練習： [AsyncStorage儲存、更新本地資料，結合async、await](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200909/pratice_storage/chris)
