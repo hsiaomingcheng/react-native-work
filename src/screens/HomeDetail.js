@@ -1,18 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, ScrollView, Image } from 'react-native';
 
 export default function HomeDetail(props) {
+    const img = props.route.params.Image ?
+        { uri: props.route.params.Image }
+        :
+        require('../../assets/baseImage.jpg');
+
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <Image
                 style={styles.image}
-                source={{
-                    uri: props.route.params.img,
-                }}
+                source={img}
             />
-            <Text style={styles.title}>{props.route.params.title}</Text>
-            <Text style={styles.text}>{props.route.params.text}</Text>
-        </View>
+            <Text style={styles.title}>{props.route.params.Name}</Text>
+            <Text style={styles.phone}>聯絡人：{props.route.params.ContactPerson}</Text>
+            <Text style={styles.phone}>電話：{props.route.params.TelDisplay}</Text>
+            <Text style={styles.address}>地址：{props.route.params.AddrDisplay}</Text>
+            <Text style={styles.text}>{props.route.params.Content}</Text>
+        </ScrollView>
     );
 }
 
@@ -33,6 +39,14 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         fontSize: 26,
         textAlign: 'center'
+    },
+    phone: {
+        marginBottom: 15,
+        fontSize: 20,
+    },
+    address: {
+        marginBottom: 15,
+        fontSize: 20,
     },
     text: {
         fontSize: 18,
