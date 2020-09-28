@@ -12,7 +12,9 @@ react-native homework place
 
 作業5： [套用navigation做各種換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200907/homework_5/chris)
 
-作業6： [自製data列表(含圖片)](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200907/homework_6/chris)
+作業6： [自製data列表(含圖片)](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200909/homework_6/chris)
+
+作業7： [作業7_串接資料 API](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200916/homework_7/chris)
 
 練習： [使用tab跟stack做換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/pratice_navgation/chris)
 
