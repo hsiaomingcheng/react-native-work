@@ -21,3 +21,5 @@ react-native homework place
 練習： [AsyncStorage儲存、更新本地資料，結合async、await](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200909/pratice_storage/chris)
 
 練習： [redux數據流練習](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200910/pratice_redux/chris)
+
+練習： ['我的最愛列表'結合redux，配合頁面渲染](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200929/practice_addFavorite/chris)
