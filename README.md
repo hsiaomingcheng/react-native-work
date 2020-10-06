@@ -34,6 +34,8 @@ npm start
 
 作業7： [作業7_串接資料 API](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200916/homework_7/chris)
 
+作業8： [作業8_我的收藏 APP](https://github.com/hsiaomingcheng/react-native-work/tree/feature/201004/homework_8/chirs)
+
 練習： [使用tab跟stack做換頁](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200904/pratice_navgation/chris)
 
 練習： [AsyncStorage儲存、更新本地資料，結合async、await](https://github.com/hsiaomingcheng/react-native-work/tree/feature/200909/pratice_storage/chris)
