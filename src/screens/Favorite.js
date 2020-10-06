@@ -2,46 +2,55 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native';
 import * as StorageHelper from '../helpers/StorageHelper';
 
-export default function HomeList(props) {
-    const [favoriteList, setFavoriteList] = useState([]);
+export default function Favorite(props) {
+    const [favoriteList, setFavoriteList] = useState();
+    const [farmData, setFarmData] = useState();
 
     useEffect(() => {
-        getLocalStorage();
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            getLocalStorage();
+        });
+        return unsubscribe;
     }, []);
 
-    // 從localstorage取回來的我的最愛列表
+    useEffect(() => {
+        // call 休閒農場住宿資訊 api
+        fetchFarmData();
+    }, []);
+
     const getLocalStorage = async () => {
         const getList = await StorageHelper.getFavoriteList('favoriteList');
 
         if (getList) {
+            console.log('JSON.parse(getList)', JSON.parse(getList));
             setFavoriteList(JSON.parse(getList));
         }
     }
 
+    function fetchFarmData() {
+        // 休閒農場住宿資訊 api
+        const requestUrl = 'https://ezgo.coa.gov.tw/API/FarmStay?lang=zh-TW';
+
+        fetch(requestUrl, { method: 'GET' })
+            .then((response) => response.json())
+            .then((responseData) => {
+                setFarmData(responseData);
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });;
+    }
+
+    let list = [];
+
+    (favoriteList && farmData) && favoriteList.forEach(element => {
+        const data = farmData.find(e => e.ID === element);
+        list.push(data);
+    });
+
     // 進入詳細頁
     function handlePress(e) {
         props.navigation.push('HomeDetail', e.item);
-    }
-
-    const handleCheckbox = async (id) => {
-        // 檢查id是否已經存在
-        // 若已存在 = 取消 加入我的最愛
-        // 若不存在 = 新增 加入我的最愛
-
-        // 檢查id是否已經存在，如果存在就返還陣列對應的index位置，不存在就返還-1
-        const foundIndex = favoriteList.findIndex(e => e === id);
-
-        if (foundIndex === -1) {
-            const list = [...favoriteList, id];
-            // 新增
-            setFavoriteList([...favoriteList, id]);
-            await StorageHelper.setFavoriteList('favoriteList', JSON.stringify(list));
-        } else {
-            // 取消
-            favoriteList.splice(foundIndex, 1);
-            setFavoriteList([...favoriteList]);
-            await StorageHelper.setFavoriteList('favoriteList', JSON.stringify([...favoriteList]));
-        }
     }
 
     /**
@@ -67,13 +76,6 @@ export default function HomeList(props) {
         return (
             <>
                 <View style={styles.listContainer}>
-                    <TouchableOpacity onPress={() => handleCheckbox(item.ID)}>
-                        <Image
-                            style={styles.checkBox}
-                            source={checkboxImage}
-                        />
-                    </TouchableOpacity>
-
                     <TouchableOpacity onPress={() => handlePress({ item })}>
                         <View style={styles.item}>
                             <Image
@@ -97,7 +99,7 @@ export default function HomeList(props) {
     return (
         <View style={styles.container}>
             <FlatList
-                data={props.route.params}
+                data={list}
                 renderItem={(item) => renderItem(item)}
                 keyExtractor={item => item.ID.toString()}
             />
@@ -107,7 +109,9 @@ export default function HomeList(props) {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         backgroundColor: '#fff',
+        padding: 10
     },
     listContainer: {
         flexDirection: 'row',
